@@ -1,4 +1,3 @@
-// import { Text, View, StyleSheet, Image } from 'react-native';
 
 // export default function home_screen() {
 //   return (
@@ -7,35 +6,56 @@
 //     </View>
 //   );
 // }
+import React, {useRef, useEffect} from 'react';
+import {Animated, Text, View, StyleSheet} from 'react-native';
 
-import React, { Component } from 'react';
-import { View, Image, TouchableOpacity } from 'react-native';
-import * as Animatable from 'react-native-animatable';
 
-class FadingImage extends Component {
-  fadeOutImage = () => {
-    this.imageRef.fadeOut(3000); // 1000ms (1 second) duration for the fade-out animation
+const FadeInView = props => {
+    const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
+  
+    useEffect(() => {
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: true,
+      }).start();
+    }, [fadeAnim]);
+  
+    return (
+      <Animated.View // Special animatable View
+        style={{
+          ...props.style,
+          opacity: fadeAnim, // Bind opacity to animated value
+        }}>
+        {props.children}
+      </Animated.View>
+    );
   };
 
-  render() {
-    return (
-      <View>
-        <TouchableOpacity onPress={this.fadeOutImage}>
-          <Animatable.View
-            ref={(ref) => (this.imageRef = ref)}
-            animation="fadeOut"
-            duration={1000}
-          >
-            <Image
-              source={require('../assets/Anteater/pixil-layer-3.png')}
-              style={styles.logo}
-            />
-          </Animatable.View>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-}
+  export default function home_screen() {
+      return (
+        <FadeInView>
+          <Image style={styles.logo} source={require('../assets/Anteater/pixil-layer-3.png')} />
+        </FadeInView>
+      );
+    }
+
+//     return (
+//       <View>
+//         <TouchableOpacity onPress={this.fadeOutImage}>
+//           <Animatable.View
+//             ref={(ref) => (this.imageRef = ref)}
+//             animation="fadeOut"
+//             duration={1000}
+//           >
+//             <Image style={styles.logo}source={require('../assets/Anteater/pixil-layer-3.png')}
+//             />
+//           </Animatable.View>
+//         </TouchableOpacity>
+//       </View>
+//     );
+//   }
+// }
 
 const styles = StyleSheet.create({
     container: {
