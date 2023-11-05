@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
       flex: 1,
       width:500,
       height: 500,
-      resizeMode: 'contain'
+      resizeMode: 'contain',
+      imageRendering: 'pixelated'
     }
 });
