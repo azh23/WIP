@@ -10,9 +10,7 @@ import Table from "./Table"
 
 import { SafeAreaView } from "react-native";
 
-const Todo_list = [
-    {task:"Walk the dog", date: "10/12/2120", completed: false}
-]
+const Todo_list = [{"completed": false, "date": "Date", "id": -1, "task": "What do you need to do"}]
 
 export default function Com() {
     const [modalVisible, setModalVisible] = useState(false);
@@ -22,18 +20,50 @@ export default function Com() {
     
     function Add_input(){
         New_tasks = [...tasks]
-        New_tasks.push({task:text, date:number})
+        if (tasks.length != 0)
+        {
+            last_ele = tasks[tasks.length - 1].id + 1;
+        }
+        else
+        {
+            last_ele = 0
+        }
+        New_tasks.push({id: last_ele, task:text, date:number, completed: false})
         setTasks(New_tasks)
         console.log(New_tasks)
     }
+    function Delete_input(id){
+        New_tasks = tasks.filter((item)=> item.id != id)
+        setTasks(New_tasks)
+    }
+
+    function toggle_completed(id) {
+      console.log(tasks)
+        New_tasks = tasks.map(item => {
+          if (item.id === id) {
+            console.log(id)
+            // if (item.completed) {
+            //   Delete_input(item)
+            // }
+            return {...item, completed: !item.completed}
+          }
+          return item;
+        })
+        setTasks(New_tasks)
+        
+        //Delete input
+        //Add input
+    }
   return (
     <SafeAreaView style ={styles.container}>
+    {/* Plus button */}
     <Pressable
     style={[styles.button, styles.buttonOpen]}
     onPress={() => setModalVisible(true)}>
     <Text style={styles.textStyle}>+</Text>
     </Pressable>
-    <Table Todo = {tasks}/>
+    {/* Plus button */}
+    <Table Todo = {tasks} Delete = {Delete_input} Toggle = {toggle_completed}/>
     <View style={styles.centeredView}>
       <Modal
         animationType="slide"
@@ -61,6 +91,7 @@ export default function Com() {
       />
       {/* User Input */}
       </View>
+            {/* Done */}
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => {
@@ -69,6 +100,16 @@ export default function Com() {
                 }}>
               <Text style={styles.textStyle}>Done</Text>
             </Pressable>
+            {/* Done */}
+
+                {/* Exit */}
+                <Pressable
+                style={[styles.button, styles.buttonOpen]}
+                onPress={() => {setModalVisible(!modalVisible);}}>
+                <Text style={styles.textStyle}>X</Text>
+                </Pressable>
+                {/* Exit */}
+
           </View>
         </View>
       </Modal>

@@ -1,19 +1,18 @@
 import { FlatList, Text, View, Button } from 'react-native'
 import React from 'react'
+import {useState} from 'react'
 
-
-const Table = ({Todo}) => {
+const Table = ({Todo, Delete, Toggle}) => {
     const item = ({ item }) => (
         <View style={{ flexDirection: 'row' }}>
             <View style={{ width: '20%', backgroundColor: 'lightyellow'}}>
-                <Text style={{ fontSize: 16, fontWeight: 'bold', textAlign: 'center'}}><Button
-            onPress = {() =>
-                
-                item.completed = !item.completed
-            }
-            title = "O" 
+                <Text style={{ fontSize: 16, fontWeight: 'bold', textAlign: 'center'}}>
+                    <View>
+                    <Button
+            onPress = {() => Toggle(item.id)}
+            title = {(item.completed ? 'O' : 'X')}
             alignItems = 'center'
-            color="#841584" />
+            color="#841584" /></View>
             </Text>
             </View>
             <View style={{ width: '20%', backgroundColor: 'lightpink'}}>
@@ -27,17 +26,11 @@ const Table = ({Todo}) => {
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: '10%'}}>
-            <FlatList data={Todo} renderItem={item} />
+            <FlatList data={Todo} renderItem={item} keyExtractor={item => item.id}/>
         </View>
     )
 }
 export default Table
-
-{/* <Button
-    OnPress = !{item.completed}
-    title = "Y"
-    color="#841584"
-/> */}
 
 
 // import { Text, View, StyleSheet, Image } from 'react-native';

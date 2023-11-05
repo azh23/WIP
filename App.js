@@ -1,9 +1,10 @@
 import Com from "./components/Tasks/Com";
-import Pet from "./components/Pet";
+//import Pet from "./Pet";
+import Home from "./components/home_screen"
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { Button, View, Text, StyleSheet, SafeAreaView } from "react-native";
+import { Button, View, Text, ImageBackground, StyleSheet, SafeAreaView } from "react-native";
 
 function TaskTitle() {
   return (
@@ -15,7 +16,8 @@ function TaskTitle() {
 function TaskScreen({navigation}) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-    <SafeAreaView style ={styles.container}>
+    <SafeAreaView style ={styles.petContainer}>
+    <Home/>
         <Text><Com/></Text>
         <Button
         style={styles.petbutton}
@@ -41,8 +43,8 @@ function TaskScreen({navigation}) {
 function PetScreen({navigation}) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-    <SafeAreaView style ={styles.pet}>
-        <Text><Pet/></Text>
+    <SafeAreaView style ={styles.petcontainer}>
+        <Text style={styles.petText}>Zot zot zot</Text>
     </SafeAreaView>
 
     </View>
@@ -55,7 +57,7 @@ export default function App() {
   return (
     <NavigationContainer>
     <Stack.Navigator>
-      <Stack.Screen 
+      <Stack.Screen
         name="Tasks" 
         component={TaskScreen} 
         options={{ headerTitle: (props) => <TaskTitle {...props} /> }}/>
@@ -66,6 +68,15 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  petcontainer: {
+    backgroundColor: 'lightblue',
+    padding: 20, /* margins */
+    borderRadius: 10,
+    borderWidth: 0,
+    borderColor:'gray',
+    width: '50%',
+    alignItems: 'center',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -89,5 +100,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#CFECF7',
     color: '#525E62'
-  }
+  },
+  petImage: {
+    width: 400,
+    height: 200,
+  },
+  petText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
 });
